@@ -67,6 +67,7 @@ app.post("/api/users/:_id/exercises", (req, res) => {
 
     const newExercise = new Exercise({
       userId: req.params._id,
+      username: data.username,
       duration: req.body.duration,
       date: dateToApply(),
       description: req.body.description,
@@ -76,7 +77,7 @@ app.post("/api/users/:_id/exercises", (req, res) => {
       if (err) return err;
       res.json({
         _id: exercise._id,
-        userId: exercise.userId,
+        username: data.username,
         duration: exercise.duration,
         date: exercise.date,
         description: exercise.description,
@@ -111,6 +112,7 @@ app.get("/api/users/:_id/logs", async (req, res) => {
   res.json({
     username: userInfo.username,
     count: logs.length,
+    date: logs.date,
     _id: userInfo._id,
     log: logs,
   });
