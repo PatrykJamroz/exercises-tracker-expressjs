@@ -58,11 +58,9 @@ app.post("/api/users/:_id/exercises", (req, res) => {
       return;
     }
 
-    const todayDate = new Date();
-    const formattedDate = todayDate.toISOString().split("T")[0];
     const dateToApply = () => {
-      if (req.body.date === "") return formattedDate;
-      return req.body.date;
+      if (req.body.date === "") return new Date().toDateString();
+      return new Date(req.body.date).toDateString();
     };
 
     const newExercise = new Exercise({
