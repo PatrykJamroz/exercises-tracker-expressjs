@@ -58,9 +58,12 @@ app.post("/api/users/:_id/exercises", (req, res) => {
       return;
     }
 
+    const todayDate = new Date();
+    const formattedDate = todayDate.toISOString().split("T")[0];
+
     const dateToApply = () => {
-      if (req.body.date === "") return new Date().toDateString();
-      return new Date(req.body.date).toDateString();
+      if (req.body.date === "") return formattedDate;
+      return req.body.date;
     };
 
     const newExercise = new Exercise({
@@ -77,7 +80,7 @@ app.post("/api/users/:_id/exercises", (req, res) => {
         _id: exercise._id,
         username: data.username,
         duration: exercise.duration,
-        date: exercise.date,
+        date: new Date(exercise.date).toDateString(),
         description: exercise.description,
       });
     });
@@ -110,9 +113,12 @@ app.get("/api/users/:_id/logs", async (req, res) => {
   res.json({
     username: userInfo.username,
     count: logs.length,
-    date: logs.date,
     _id: userInfo._id,
-    log: logs,
+    log: logs.map((exercise) => ({
+      duration: exercise.duration,
+      description: exercise.description,
+      date: new Date(exercise.date).toDateString(),
+    })),
   });
 });
 
