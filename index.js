@@ -77,7 +77,7 @@ app.post("/api/users/:_id/exercises", (req, res) => {
     newExercise.save((err, exercise) => {
       if (err) return err;
       res.json({
-        _id: exercise._id,
+        _id: req.params._id,
         username: data.username,
         duration: exercise.duration,
         date: new Date(exercise.date).toDateString(),
