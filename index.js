@@ -62,7 +62,7 @@ app.post("/api/users/:_id/exercises", (req, res) => {
     const formattedDate = todayDate.toISOString().split("T")[0];
 
     const dateToApply = () => {
-      if (req.body.date === "") return formattedDate;
+      if (!req.body.date) return formattedDate;
       return req.body.date;
     };
 
